@@ -4,7 +4,7 @@
             <a class="mobile-menu" id="mobile-collapse" href="#!">
                 <i class="feather icon-menu"></i>
             </a>
-            <a href="<?= base_url('admin/index');?>">
+            <a href="<?= base_url('admin/index.html');?>">
                 <img class="img-fluid" src="<?= base_url('images/logo.png'); ?>" alt="Theme-Logo" />
             </a>
             <a class="mobile-options">

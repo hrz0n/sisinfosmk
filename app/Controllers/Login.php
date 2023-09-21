@@ -24,7 +24,7 @@ class Login extends BaseController
         }
 
         if (session()->get('tipe') > 0 ){
-            return redirect('admin');
+            return redirect()->to('admin/index.html');
         }
         return redirect('/');
     }
@@ -47,7 +47,7 @@ class Login extends BaseController
                 ];
                 session()->set($ses_data);
                 if ($data['tipe_user'] > 0 ){
-                    return redirect('admin/index');
+                    return redirect()->to('admin/index.html');
                 }
                 return redirect('/');
             } else {

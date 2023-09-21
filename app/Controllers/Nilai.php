@@ -39,19 +39,19 @@ class Nilai extends BaseController
 
             if ($kategory == 'harian') {
                 return DataTable::of($builder)->add(null, function($row){
-                    return '<a href="'.base_url('admin/nilai/harian/entri/1/'.$row->idkelas.'/'.$row->kode).'" class="btn btn-primary"><i class="feather icon-log-out"></i> Entri Nilai</a>';
+                    return '<a href="'.base_url('admin/nilai/harian/entri/1/'.$row->idkelas.'/'.$row->kode.'.html').'" class="btn btn-primary"><i class="feather icon-log-out"></i> Entri Nilai</a>';
                 })->toJson();
             } elseif($kategory == 'mid') {
                 return DataTable::of($builder)->add(null, function($row){
-                    return '<a href="'.base_url('admin/nilai/mid/entri/2/'.$row->idkelas.'/'.$row->kode).'" class="btn btn-primary"><i class="feather icon-log-out"></i> Entri Nilai</a>';
+                    return '<a href="'.base_url('admin/nilai/mid/entri/2/'.$row->idkelas.'/'.$row->kode.'.html').'" class="btn btn-primary"><i class="feather icon-log-out"></i> Entri Nilai</a>';
                 })->toJson();
             } elseif($kategory == 'semester') {
                 return DataTable::of($builder)->add(null, function($row){
-                    return '<a href="'.base_url('admin/nilai/semester/entri/3/'.$row->idkelas.'/'.$row->kode).'" class="btn btn-primary"><i class="feather icon-log-out"></i> Entri Nilai</a>';
+                    return '<a href="'.base_url('admin/nilai/semester/entri/3/'.$row->idkelas.'/'.$row->kode.'.html').'" class="btn btn-primary"><i class="feather icon-log-out"></i> Entri Nilai</a>';
                 })->toJson();
             } else {
                 return DataTable::of($builder)->add(null, function($row){
-                    return '<a href="'.base_url('admin/nilai/cp/entri/4/'.$row->idkelas.'/'.$row->kode).'" class="btn btn-primary"><i class="feather icon-log-out"></i> Entri Nilai</a>';
+                    return '<a href="'.base_url('admin/nilai/cp/entri/4/'.$row->idkelas.'/'.$row->kode.'.html').'" class="btn btn-primary"><i class="feather icon-log-out"></i> Entri Nilai</a>';
                 })->toJson();
             }           
 
@@ -177,7 +177,7 @@ class Nilai extends BaseController
         $db = db_connect();
         $builder = $db->table('tbl_nilai');
         $builder->upsert($newArr);
-        return redirect()->to('admin/nilai/harian/entri/'.$tipe.'/'.$id_kelas.'/'.$kode_pelajaran)->with('pesan','Yeeeyyy .... data nilai berhasil disimpan! Siliahkan isi nilai kelas lain, <a href="'.base_url('admin/nilai/harian').'"> Klik disini</a>');
+        return redirect()->to('admin/nilai/harian/entri/'.$tipe.'/'.$id_kelas.'/'.$kode_pelajaran.'.html')->with('pesan','Yeeeyyy .... data nilai berhasil disimpan! Siliahkan isi nilai kelas lain, <a href="'.base_url('admin/nilai/harian.html').'"> Klik disini</a>');
 
         
     }

@@ -3,7 +3,7 @@
         <div class="pcoded-navigatio-lavel">Navigation</div>
         <ul class="pcoded-item pcoded-left-item">
             <li class="">
-                <a title="Dashboard" href="<?= base_url('admin/index');?>">
+                <a title="Dashboard" href="<?= base_url('admin/index.html');?>">
                     <span class="pcoded-micon"><i class="feather icon-home"></i></span>
                     <span class="pcoded-mtext">Dashboard</span>
                 </a>
@@ -17,22 +17,22 @@
                     </a>
                     <ul class="pcoded-submenu">
                         <li class="">
-                            <a href="<?= base_url('admin/nilai/harian');?>">
+                            <a href="<?= base_url('admin/nilai/harian.html');?>">
                                 <span class="pcoded-mtext">Harian</span>
                             </a>
                         </li>
                         <li class="">
-                            <a href="<?= base_url('admin/nilai/mid');?>">
+                            <a href="<?= base_url('admin/nilai/mid.html');?>">
                                 <span class="pcoded-mtext">MID</span>
                             </a>
                         </li>
                         <li class="">
-                            <a href="<?= base_url('admin/nilai/semester');?>">
+                            <a href="<?= base_url('admin/nilai/semester.html');?>">
                                 <span class="pcoded-mtext">Semester</span>
                             </a>
                         </li>
                         <li class="">
-                            <a href="<?= base_url('admin/nilai/cp');?>">
+                            <a href="<?= base_url('admin/nilai/cp.html');?>">
                                 <span class="pcoded-mtext">Capaian Kompetensi</span>
                             </a>
                         </li>

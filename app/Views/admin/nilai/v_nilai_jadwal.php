@@ -53,7 +53,7 @@
         dom: 'tip',
         ordering:true,
         searching: true,
-        ajax: '<?= base_url('admin/nilai/r_jadwal/'.$kategory);?>',
+        ajax: '<?= base_url('admin/nilai/r_jadwal/'.$kategory.'.html');?>',
         pageLength: 20,
         language: {
             'search': "Filter Data",
