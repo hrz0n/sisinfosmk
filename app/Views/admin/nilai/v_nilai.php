@@ -27,9 +27,9 @@
                 <div class="table-responsive">
                     
 
-                    <form action="<?= base_url('admin/nilai/harian/entri/proses');?>" method="POST">
+                    <form action="<?= base_url('admin/nilai/entri/proses');?>" method="POST">
                     <?= csrf_field() ;?>
-                    <input type="hidden" name="tipe" value="1">
+                    <input type="hidden" name="tipe" value="<?= $tipe;?>">
                     <input type="hidden" name="id_kelas" value="<?= $id_kelas;?>">
                     <input type="hidden" name="kode_pelajaran" value="<?= $mapel;?>">
                     <table id="tbl-nilai" class="table table-framed table-hover" style="width:100%">
@@ -50,7 +50,7 @@
                                     <td><?= $nomor++ ;?></td>
                                     <td><?= $value['nama'] ;?></td>
                                     <td><?= $value['nis'] ;?></td>                                
-                                    <td><input type="hidden" name="id_nilai[]" value="<?= $value['id_nilai'];?>"><input type="hidden" name="id_siswa[]" value="<?= $value['idsiswa'];?>"><input name="nilai[]" placeholder="Ex: 98" class="form-control form-control-sm" value="<?= $value['nilai'];?>"></td>
+                                    <td><input type="hidden" name="id_nilai[]" value="<?= $value['id_nilai'];?>"><input type="hidden" name="id_siswa[]" value="<?= $value['idsiswa'];?>"><input type="number" name="nilai[]" placeholder="Ex: 98" class="form-control form-control-sm" value="<?= $value['nilai'];?>"></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>

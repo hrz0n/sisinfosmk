@@ -17,20 +17,11 @@
                     </a>
                     <ul class="pcoded-submenu">
                         <li class="">
-                            <a href="<?= base_url('admin/nilai/harian.html');?>">
-                                <span class="pcoded-mtext">Harian</span>
+                            <a href="<?= base_url('admin/nilai/index.html');?>">
+                                <span class="pcoded-mtext">Entri Nilai</span>
                             </a>
                         </li>
-                        <li class="">
-                            <a href="<?= base_url('admin/nilai/mid.html');?>">
-                                <span class="pcoded-mtext">MID</span>
-                            </a>
-                        </li>
-                        <li class="">
-                            <a href="<?= base_url('admin/nilai/semester.html');?>">
-                                <span class="pcoded-mtext">Semester</span>
-                            </a>
-                        </li>
+                        
                         <li class="">
                             <a href="<?= base_url('admin/nilai/cp.html');?>">
                                 <span class="pcoded-mtext">Capaian Kompetensi</span>

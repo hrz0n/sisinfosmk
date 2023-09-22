@@ -15,7 +15,7 @@ $routes->get('/admin/index.html', 'Admin::index', ['filter' => 'authGuard']);
 $routes->get('/admin/nilai/(:segment).html', 'Nilai::index/$1', ['filter' => 'authGuard']);
 $routes->get('/admin/nilai/r_jadwal/(:segment).html', 'Nilai::getJadwalAjax/$1', ['filter' => 'authGuard']);
 // entri nilai /tipe/id_kelas/kodepel/
-$routes->get('/admin/nilai/harian/entri/(:num)/(:num)/(:segment).html', 'Nilai::entriNilai/$1/$2/$3', ['filter' => 'authGuard']);
-$routes->post('/admin/nilai/harian/entri/proses', 'Nilai::prosesNilai', ['filter' => 'authGuard']);
+$routes->get('/admin/nilai/entri/(:num)/(:num)/(:segment).html', 'Nilai::entriNilai/$1/$2/$3', ['filter' => 'authGuard']);
+$routes->post('/admin/nilai/entri/proses', 'Nilai::prosesNilai', ['filter' => 'authGuard']);
 
 

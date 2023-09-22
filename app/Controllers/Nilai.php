@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\JadwalModel;
 use \Hermawan\DataTables\DataTable;
 use \App\Models\NilaiModel;
 
@@ -16,7 +17,7 @@ class Nilai extends BaseController
             'page_key' => 'Daftar Jadwal - Entri Nilai '. $kategory,
             'kategory' => $kategory
         ];
-        if ($kategory == 'harian' || $kategory == 'mid' || $kategory == 'semester' || $kategory == 'cp') {
+        if ($kategory == 'index' || $kategory == 'cp') {
             return view('admin/nilai/v_nilai_jadwal', $data);
         } else {
             
@@ -28,30 +29,25 @@ class Nilai extends BaseController
         helper(['config_helper']);
 
         if (session()->get('tipe') == 1 && session()->get('id_guru') > 0) {
-            $db = db_connect();
-            $builder = $db->table('tbl_jadwal')->select('tbl_jadwal.id, tbl_pelajaran.kode, tbl_pelajaran.nama_pelajaran,tbl_kelas.nama_kelas, tbl_kelas.id AS idkelas')
+            $datamodel = new JadwalModel();
+            $builder = $datamodel->select('tbl_jadwal.id, tbl_pelajaran.kode, tbl_pelajaran.nama_pelajaran,tbl_kelas.nama_kelas, tbl_kelas.id AS idkelas')
                     ->join('tbl_pelajaran', 'tbl_pelajaran.kode = tbl_jadwal.kode_pelajaran')
                     ->join('tbl_kelas', 'tbl_kelas.id = tbl_jadwal.id_kelas')
                     ->where('tbl_jadwal.id_guru',session()->get('id_guru'))
                     ->where('tbl_jadwal.semester', get_config_db('APP_SMT'))
                     ->where('tbl_jadwal.thn_pelajaran', get_config_db('APP_THN_PELAJARAN'))
+                    ->orderBy('tbl_kelas.nama_kelas', 'ASC')
                     ->groupBy(['tbl_jadwal.kode_pelajaran','tbl_jadwal.id_kelas']);
-
-            if ($kategory == 'harian') {
+            
+            if ($kategory == 'index') {
                 return DataTable::of($builder)->add(null, function($row){
-                    return '<a href="'.base_url('admin/nilai/harian/entri/1/'.$row->idkelas.'/'.$row->kode.'.html').'" class="btn btn-primary"><i class="feather icon-log-out"></i> Entri Nilai</a>';
-                })->toJson();
-            } elseif($kategory == 'mid') {
-                return DataTable::of($builder)->add(null, function($row){
-                    return '<a href="'.base_url('admin/nilai/mid/entri/2/'.$row->idkelas.'/'.$row->kode.'.html').'" class="btn btn-primary"><i class="feather icon-log-out"></i> Entri Nilai</a>';
-                })->toJson();
-            } elseif($kategory == 'semester') {
-                return DataTable::of($builder)->add(null, function($row){
-                    return '<a href="'.base_url('admin/nilai/semester/entri/3/'.$row->idkelas.'/'.$row->kode.'.html').'" class="btn btn-primary"><i class="feather icon-log-out"></i> Entri Nilai</a>';
+                    return '<a href="'.base_url('admin/nilai/entri/1/'.$row->idkelas.'/'.$row->kode.'.html').'" class="btn btn-primary"><i class="feather icon-log-out"></i> Nilai Harian</a>
+                    <a href="'.base_url('admin/nilai/entri/2/'.$row->idkelas.'/'.$row->kode.'.html').'" class="btn btn-success"><i class="feather icon-log-out"></i> Nilai MID</a>
+                    <a href="'.base_url('admin/nilai/entri/3/'.$row->idkelas.'/'.$row->kode.'.html').'" class="btn btn-danger"><i class="feather icon-log-out"></i> Nilai Semester</a>';
                 })->toJson();
             } else {
                 return DataTable::of($builder)->add(null, function($row){
-                    return '<a href="'.base_url('admin/nilai/cp/entri/4/'.$row->idkelas.'/'.$row->kode.'.html').'" class="btn btn-primary"><i class="feather icon-log-out"></i> Entri Nilai</a>';
+                    return '<a href="'.base_url('admin/nilai/entri/4/'.$row->idkelas.'/'.$row->kode.'.html').'" class="btn btn-warning"><i class="feather icon-log-out"></i> Capaian Kompetensi</a>';
                 })->toJson();
             }           
 
@@ -95,7 +91,7 @@ class Nilai extends BaseController
                 'kelas' => $row->nama_kelas,
                 'nilai' => $nilai,
                 'id_nilai' => $id_nilai,
-                'status' => $status
+                'status' => $status                
             ];
             $str_kelas = $row->nama_kelas;
             $str_mapel = $kode_pelajaran;
@@ -104,11 +100,11 @@ class Nilai extends BaseController
         // dd($dataMaster);
         $strnilai = "";
         if ($tipe == 1) {
-            $strnilai = "harian";
+            $strnilai = "Harian";
         } elseif ($tipe == 2) {
-            $strnilai = "mid";
+            $strnilai = "MID";
         } elseif ($tipe == 3) {
-            $strnilai = "semester";
+            $strnilai = "Semester";
         }
 
         $output = [
@@ -119,8 +115,9 @@ class Nilai extends BaseController
             'id_kelas' => $id_kelas,
             'kelas' => $str_kelas,
             'mapel' => $str_mapel,
+            'tipe' => $tipe
         ];
-        return view('admin/nilai/v_nilai_'.$strnilai, $output);
+        return view('admin/nilai/v_nilai', $output);
 
     }
 
@@ -177,7 +174,7 @@ class Nilai extends BaseController
         $db = db_connect();
         $builder = $db->table('tbl_nilai');
         $builder->upsert($newArr);
-        return redirect()->to('admin/nilai/harian/entri/'.$tipe.'/'.$id_kelas.'/'.$kode_pelajaran.'.html')->with('pesan','Yeeeyyy .... data nilai berhasil disimpan! Siliahkan isi nilai kelas lain, <a href="'.base_url('admin/nilai/harian.html').'"> Klik disini</a>');
+        return redirect()->to('admin/nilai/entri/'.$tipe.'/'.$id_kelas.'/'.$kode_pelajaran.'.html')->with('pesan','Yeeeyyy .... data nilai berhasil disimpan! Siliahkan isi nilai kelas lain, <a href="'.base_url('admin/nilai/index.html').'"> Klik disini</a>');
 
         
     }
