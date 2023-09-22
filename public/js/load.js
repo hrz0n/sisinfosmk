@@ -26,26 +26,18 @@ const notyf = new Notyf({
 });
 
 
-
-
-
-
 $(document).ready(function(){
 
-
   var url = window.location.href;
-  // url = url.substring(0, (url.indexOf("#") == -1) ? url.length : url.indexOf("#"));
-  // url = url.substring(0, (url.indexOf("?") == -1) ? url.length : url.indexOf("?"));
-  // url = url.substr(url.lastIndexOf("/") + 1);
-  // url = url;
-  // if(url == '/'){
-  //   url = 'index';
-  // }
-
-
+  var subUrl = url;
+  subUrl = subUrl.substring(0, (subUrl.indexOf("#") == -1) ? subUrl.length : subUrl.indexOf("#"));
+  subUrl = subUrl.substring(0, (subUrl.indexOf("?") == -1) ? subUrl.length : subUrl.indexOf("?"));
+  subUrl = subUrl.substr(subUrl.lastIndexOf("/") - 10);
+  var oksubUrl = url.replace(subUrl,'/index.html');
+ 
   $('.pcoded-item li').each(function(){
    var href = $(this).find('a').attr('href');
-   if(url == href){
+   if(url == href || href == oksubUrl){
       var parentClass = $(this).parent('ul').attr('class');
       var classMenu = parentClass.replace(/ .*/,'');
       if(classMenu == 'pcoded-submenu'){
