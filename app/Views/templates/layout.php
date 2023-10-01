@@ -20,6 +20,24 @@
     <script type="text/javascript" src="<?= base_url('js/jquery.min.js'); ?>"></script>
     <script type="text/javascript" src="<?= base_url('js/jquery-ui.min.js'); ?>"></script>
     <script type="text/javascript" src="<?= base_url('js/select2.min.js'); ?>"></script>
+    <style>
+        
+        .has-search .form-control {
+            padding-left: 2.375rem;
+        }
+
+        .has-search .form-control-feedback {
+            position: absolute;
+            z-index: 2;
+            display: block;
+            width: 2.375rem;
+            height: 2.375rem;
+            line-height: 1.8rem;
+            text-align: center;
+            pointer-events: none;
+            color: #aaa;
+        }
+    </style>
 </head>
 <body>
 <div class="theme-loader">

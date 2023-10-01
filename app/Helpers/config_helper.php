@@ -7,3 +7,12 @@ function get_config_db($nama){
     return $data->value;
 }
 
+function isCanEntriNilai() {
+    $dateNow = date('Y-m-d');
+    $data = false;
+    if (get_config_db('APP_BATAS_ENTRI') > $dateNow) {
+        $data = true;
+    }
+    return $data;
+}
+

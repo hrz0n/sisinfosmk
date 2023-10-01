@@ -6,13 +6,12 @@
         <div class="card">
             <div class="card-header">
                 <h5>Jadwal Pelajaran</h5>
-                <span>Pilih nama pelajaran dan kelas yang diampu!</span>
-                <div class="card-header-right">
-                    <ul class="list-unstyled card-option">
-                        <li><i class="feather icon-maximize full-card"></i></li>
-                        <li><i class="feather icon-minus minimize-card"></i></li>
-                        <li><i class="feather icon-trash-2 close-card"></i></li>
-                    </ul>
+                <span>Pilih nama pelajaran dan kelas yang diampu, selanjutnya pilih nilai harian, MID dan semester!</span>
+                <div class="card-header-right mx-2">
+                    <div class="form-group has-search">
+                        <span class="feather icon-search form-control-feedback"></span>
+                        <input id="global_filter" placeholder="Cari data.." class="form-control list-unstyled card-option global_filter" type="text">
+                    </div>
                 </div>
             </div>
             <div class="card-block">
@@ -40,8 +39,13 @@
 <?= $this->section('scripts');?>
 
 <script type="text/javascript">
-  $(document).ready(function() {
     var table;
+
+  $(document).ready(function() {
+
+    $('input.global_filter').on( 'keyup click', function () {
+        filterGlobal();
+    });
 
     table = $('#tbl-jadwal').DataTable({
         processing: true,
@@ -112,6 +116,15 @@
 
     });
 });
+
+function filterGlobal () {
+    $('#tbl-jadwal').DataTable().search(
+        $('#global_filter').val(),
+        $('#global_regex').prop('checked'),
+        $('#global_smart').prop('checked')
+    ).draw();
+}
+
 </script>
 
 

@@ -15,18 +15,10 @@
             <ul class="nav-left">
                 <li class="header-search">
                     <div class="main-search morphsearch-search">
-                        <div class="input-group">
-                            <span class="input-group-addon search-close"><i class="feather icon-x"></i></span>
-                            <input type="text" class="form-control">
-                            <span class="input-group-addon search-btn"><i class="feather icon-search"></i></span>
-                        </div>
+                        NAMA SEKOLAH NEGERI
                     </div>
                 </li>
-                <li>
-                    <a href="#!" onclick="javascript:toggleFullScreen()">
-                        <i class="feather icon-maximize full-screen"></i>
-                    </a>
-                </li>
+                
             </ul>
             <ul class="nav-right">
                 <li class="user-profile header-notification">

@@ -5,20 +5,33 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-header">
-                <h5>Entri Nilai Harian Kelas <?= $kelas; ?></h5>
+                <h5><?= $page_title; ?> Kelas <?= $kelas; ?></h5>
                 <span>Isi semua nilai siswa pada mapel <code><?= $mapel; ?></code> dan selanjutnya simpan nilai!</span>
-                <div class="card-header-right">
-                    <ul class="list-unstyled card-option">
-                        <li><i class="feather icon-maximize full-card"></i></li>
-                        <li><i class="feather icon-minus minimize-card"></i></li>
-                        <li><i class="feather icon-trash-2 close-card"></i></li>
-                    </ul>
+                <div class="card-header-right mx-2">
+                    <div class="form-group has-search">
+                        <span class="feather icon-search form-control-feedback"></span>
+                        <input id="global_filter" placeholder="Cari data.." class="form-control list-unstyled card-option global_filter" type="text">
+                    </div>
                 </div>
             </div>
             <div class="card-block">
-            <?php if (session()->getFlashdata('pesan')):?>
+                <?php 
+                    $strIsDisabled = '';
+                    if (!$isCanEntri) {
+                        $strIsDisabled = "disabled";
+                    }
+                    if (session()->getFlashdata('pesan')):?>
                         <div class="alert bg-success text-white mt-0 mb-2 alert-dismissible fade show" role="alert">
                         <?= session()->getFlashdata('pesan') ;?>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                    <?php endif ;?>
+
+                    <?php if (!$strIsDisabled == ''):?>
+                        <div class="alert bg-danger text-white mt-0 mb-2 alert-dismissible fade show" role="alert">
+                            Batas entri nilai telah habis, Anda tidak bisa menambah/mengubah nilai saat ini!
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -50,12 +63,12 @@
                                     <td><?= $nomor++ ;?></td>
                                     <td><?= $value['nama'] ;?></td>
                                     <td><?= $value['nis'] ;?></td>                                
-                                    <td><input type="hidden" name="id_nilai[]" value="<?= $value['id_nilai'];?>"><input type="hidden" name="id_siswa[]" value="<?= $value['idsiswa'];?>"><input type="number" name="nilai[]" placeholder="Ex: 98" class="form-control form-control-sm" value="<?= $value['nilai'];?>"></td>
+                                    <td><input type="hidden" name="id_nilai[]" value="<?= $value['id_nilai'];?>"><input type="hidden" name="id_siswa[]" value="<?= $value['idsiswa'];?>"><input <?= $strIsDisabled; ?> style="min-width: 80px;" type="number" name="nilai[]" placeholder="Ex: 98" class="form-control form-control-sm nilai" value="<?= $value['nilai'];?>"></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
                     </table>
-                    <?php if (!empty($dataMaster)) :?>
+                    <?php if (!empty($dataMaster) && $isCanEntri) :?>
                         <button type="submit" name="simpan_nilai" class="btn btn-danger mt-4 px-4">Simpan Nilai</button>
                     <?php endif;?>
                 </form>
@@ -70,8 +83,12 @@
 <?= $this->section('scripts');?>
 
 <script type="text/javascript">
-  $(document).ready(function() {
     var table;
+
+  $(document).ready(function() {
+    $('input.global_filter').on( 'keyup click', function () {
+        filterGlobal();
+    });
 
     table = $('#tbl-nilai').DataTable({
         processing: true,
@@ -135,6 +152,22 @@
       order: [[1, 'ASC']]
 
     });
+
+    $('.nilai').keyup(function(){
+        if ($(this).val() > 100){
+            $(this).addClass('is-invalid');
+            $(this).val('100');
+            $(this).removeClass('is-invalid');
+        }
+    });
 });
+
+function filterGlobal () {
+    $('#tbl-nilai').DataTable().search(
+        $('#global_filter').val(),
+        $('#global_regex').prop('checked'),
+        $('#global_smart').prop('checked')
+    ).draw();
+}
 </script>
 <?= $this->endSection();?>

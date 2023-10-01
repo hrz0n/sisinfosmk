@@ -59,6 +59,8 @@ class Nilai extends BaseController
         $str_kelas = "-";
         $str_mapel = "-";
         $dataMaster = [];
+
+        
         $db = db_connect();
         $dataSiswa = $db->table('tbl_siswa')->select('
             tbl_siswa.id AS idsiswa, tbl_biodata.id AS idbiodata, tbl_biodata.nama AS namasiswa,tbl_biodata.nis, tbl_kelas.id as idkelas, tbl_kelas.nama_kelas
@@ -105,6 +107,8 @@ class Nilai extends BaseController
             $strnilai = "MID";
         } elseif ($tipe == 3) {
             $strnilai = "Semester";
+        } elseif ($tipe == 4) {
+            $strnilai = "Capaian Kompetensi";
         }
 
         $output = [
@@ -115,7 +119,8 @@ class Nilai extends BaseController
             'id_kelas' => $id_kelas,
             'kelas' => $str_kelas,
             'mapel' => $str_mapel,
-            'tipe' => $tipe
+            'tipe' => $tipe,
+            'isCanEntri' => isCanEntriNilai()
         ];
         return view('admin/nilai/v_nilai', $output);
 
@@ -142,7 +147,6 @@ class Nilai extends BaseController
         ];
         return $data;
     }
-
 
     public function prosesNilai() {
         helper(['config_helper']);
@@ -171,11 +175,11 @@ class Nilai extends BaseController
             }
         }
 
-        $db = db_connect();
-        $builder = $db->table('tbl_nilai');
-        $builder->upsert($newArr);
+        $datamodel = new NilaiModel();
+        $datamodel->upsert($newArr);
         return redirect()->to('admin/nilai/entri/'.$tipe.'/'.$id_kelas.'/'.$kode_pelajaran.'.html')->with('pesan','Yeeeyyy .... data nilai berhasil disimpan! Siliahkan isi nilai kelas lain, <a href="'.base_url('admin/nilai/index.html').'"> Klik disini</a>');
 
         
     }
+    
 }
